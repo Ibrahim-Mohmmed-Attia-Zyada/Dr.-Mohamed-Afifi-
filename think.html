@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شكراً لكم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1a1f2e 0%, #0f1419 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            color: #fff;
+        }
+
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+            50% { transform: translateY(-30px) translateX(10px); opacity: 0.8; }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Title */
+        .main-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 50px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .main-title .emoji {
+            font-size: 2.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Cards Container - Vertical Stack */
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 60px;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(100, 180, 255, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #7eb8ff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .card-title .emoji {
+            font-size: 1.4rem;
+        }
+
+        .card-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        /* Divider */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            margin-bottom: 50px;
+        }
+
+        /* Footer Section */
+        .footer-section {
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .footer-title .emoji {
+            font-size: 1.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .footer-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            .card-title {
+                font-size: 1.2rem;
+            }
+            .card-description {
+                font-size: 1rem;
+            }
+            .footer-title {
+                font-size: 1.5rem;
+            }
+            .glass-card {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Entrance Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1.0s; }
+        .delay-6 { animation-delay: 1.2s; }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Main Title -->
+        <h1 class="main-title fade-in-up">
+            لماذا نشكرك؟
+            <span class="emoji">🎓</span>
+        </h1>
+
+        <!-- Cards Container -->
+        <div class="cards-container">
+            <!-- Card 1 -->
+            <div class="glass-card fade-in-up delay-1">
+                <div class="card-title">
+                    <span class="emoji">⭐</span>
+                    الإخلاص في العمل
+                </div>
+                <p class="card-description">
+                    جهد واضح وتفانٍ في إيصال العلم بأفضل صورة.
+                </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="glass-card fade-in-up delay-2">
+                <div class="card-title">
+                    <span class="emoji">🤝</span>
+                    دعم الطلاب
+                </div>
+                <p class="card-description">
+                    المساعدة المستمرة والاهتمام بفهم الجميع.
+                </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="glass-card fade-in-up delay-3">
+                <div class="card-title">
+                    <span class="emoji">📚</span>
+                    أسلوب شرح مميز
+                </div>
+                <p class="card-description">
+                    تبسيط المفاهيم الصعبة وجعل التفاعل أكثر وضوحاً.
+                </p>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider fade-in-up delay-4"></div>
+
+        <!-- Footer Section -->
+        <div class="footer-section fade-in-up delay-5">
+            <h2 class="footer-title">
+                <span class="emoji">🌹</span>
+                شكرًا لكم على كل ما قدمتموه
+            </h2>
+            <p class="footer-subtitle fade-in-up delay-6">
+                طلاب كلية الحاسبات والذكاء الاصطناعي – علوم البيانات
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Generate random particles
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 80;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Random positioning
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            
+            // Random size
+            const size = Math.random() * 3 + 1;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            
+            // Random animation duration and delay
+            particle.style.animationDuration = (Math.random() * 6 + 4) + 's';
+            particle.style.animationDelay = (Math.random() * 5) + 's';
+            
+            // Random opacity
+            particle.style.opacity = Math.random() * 0.5 + 0.2;
+            
+            particlesContainer.appendChild(particle);
+        }
+
+        // Mouse parallax effect on cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `translateY(-8px) scale(1.02) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1) perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>'''
